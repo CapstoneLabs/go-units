@@ -3,26 +3,30 @@ package units
 var (
 	Mass = UnitOptionQuantity("mass")
 
-	// metric
-	Gram      = NewUnit("gram", "g", Mass)
-	ExaGram   = Exa(Gram)
-	PetaGram  = Peta(Gram)
-	TeraGram  = Tera(Gram)
-	GigaGram  = Giga(Gram)
-	MegaGram  = Mega(Gram)
-	KiloGram  = Kilo(Gram)
-	HectoGram = Hecto(Gram)
-	DecaGram  = Deca(Gram)
-	DeciGram  = Deci(Gram)
-	CentiGram = Centi(Gram)
-	MilliGram = Milli(Gram)
-	MicroGram = Micro(Gram)
-	NanoGram  = Nano(Gram)
-	PicoGram  = Pico(Gram)
-	FemtoGram = Femto(Gram)
-	AttoGram  = Atto(Gram)
+	// Metric
 
-	// imperial
+	Gram      = NewUnit("gram", "g", Mass)
+	ExaGram   = Exa(Gram, FactorLinear)
+	PetaGram  = Peta(Gram, FactorLinear)
+	TeraGram  = Tera(Gram, FactorLinear)
+	GigaGram  = Giga(Gram, FactorLinear)
+	MegaGram  = Mega(Gram, FactorLinear)
+	KiloGram  = Kilo(Gram, FactorLinear)
+	HectoGram = Hecto(Gram, FactorLinear)
+	DecaGram  = Deca(Gram, FactorLinear)
+	DeciGram  = Deci(Gram, FactorLinear)
+	CentiGram = Centi(Gram, FactorLinear)
+	MilliGram = Milli(Gram, FactorLinear)
+	MicroGram = Micro(Gram, FactorLinear)
+	NanoGram  = Nano(Gram, FactorLinear)
+	PicoGram  = Pico(Gram, FactorLinear)
+	FemtoGram = Femto(Gram, FactorLinear)
+	AttoGram  = Atto(Gram, FactorLinear)
+
+	MetricTon = NewUnit("metric ton", "t", Mass, SI)
+
+	// Imperial
+
 	Grain  = NewUnit("grain", "gr", Mass, BI)
 	Drachm = NewUnit("drachm", "dr", Mass, BI)
 	Ounce  = NewUnit("ounce", "oz", Mass, BI)
@@ -33,6 +37,8 @@ var (
 )
 
 func init() {
+	NewRatioConversion(MetricTon, KiloGram, 1000)
+
 	NewRatioConversion(Grain, Gram, 0.06479891)
 	NewRatioConversion(Drachm, Gram, 1.7718451953125)
 	NewRatioConversion(Ounce, Gram, 28.349523125)

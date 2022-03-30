@@ -37,12 +37,12 @@ var (
 	Yobibyte = NewUnit("yobibyte", "YiB", Data, IEC)
 
 	Bit     = NewUnit("bit", "b", Bi)
-	KiloBit = Kilo(Bit)
-	MegaBit = Mega(Bit)
-	GigaBit = Giga(Bit)
-	TeraBit = Tera(Bit)
-	PetaBit = Peta(Bit)
-	ExaBit  = Exa(Bit)
+	KiloBit = Kilo(Bit, FactorLinear)
+	MegaBit = Mega(Bit, FactorLinear)
+	GigaBit = Giga(Bit, FactorLinear)
+	TeraBit = Tera(Bit, FactorLinear)
+	PetaBit = Peta(Bit, FactorLinear)
+	ExaBit  = Exa(Bit, FactorLinear)
 
 	Nibble = NewUnit("nibble", "", Data)
 )

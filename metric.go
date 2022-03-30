@@ -10,46 +10,125 @@ type magnitude struct {
 	Power  float64
 }
 
-var mags = map[string]magnitude{
-	"exa":   magnitude{"E", "exa", 18.0},
-	"peta":  magnitude{"P", "peta", 15.0},
-	"tera":  magnitude{"T", "tera", 12.0},
-	"giga":  magnitude{"G", "giga", 9.0},
-	"mega":  magnitude{"M", "mega", 6.0},
-	"kilo":  magnitude{"k", "kilo", 3.0},
-	"hecto": magnitude{"h", "hecto", 2.0},
-	"deca":  magnitude{"da", "deca", 1.0},
-	"deci":  magnitude{"d", "deci", -1.0},
-	"centi": magnitude{"c", "centi", -2.0},
-	"milli": magnitude{"m", "milli", -3.0},
-	"micro": magnitude{"μ", "micro", -6.0},
-	"nano":  magnitude{"n", "nano", -9.0},
-	"pico":  magnitude{"p", "pico", -12.0},
-	"femto": magnitude{"f", "femto", -15.0},
-	"atto":  magnitude{"a", "atto", -18.0},
-}
+var (
+	keyExa   = "exa"
+	keyPeta  = "peta"
+	keyTera  = "tera"
+	keyGiga  = "giga"
+	keyMega  = "mega"
+	keyKilo  = "kilo"
+	keyHecto = "hecto"
+	keyDeca  = "deca"
+	keyDeci  = "deci"
+	keyCenti = "centi"
+	keyMilli = "milli"
+	keyMicro = "micro"
+	keyNano  = "nano"
+	keyPico  = "pico"
+	keyFemto = "femto"
+	keyAtto  = "atto"
+
+	mags = map[string]magnitude{
+		keyExa:   {"E", "exa", 18.0},
+		keyPeta:  {"P", "peta", 15.0},
+		keyTera:  {"T", "tera", 12.0},
+		keyGiga:  {"G", "giga", 9.0},
+		keyMega:  {"M", "mega", 6.0},
+		keyKilo:  {"k", "kilo", 3.0},
+		keyHecto: {"h", "hecto", 2.0},
+		keyDeca:  {"da", "deca", 1.0},
+		keyDeci:  {"d", "deci", -1.0},
+		keyCenti: {"c", "centi", -2.0},
+		keyMilli: {"m", "milli", -3.0},
+		keyMicro: {"u", "micro", -6.0}, // μ
+		keyNano:  {"n", "nano", -9.0},
+		keyPico:  {"p", "pico", -12.0},
+		keyFemto: {"f", "femto", -15.0},
+		keyAtto:  {"a", "atto", -18.0},
+	}
+)
 
 // Magnitude prefix methods create and return a new Unit, while automatically registering
 // conversions to and from the provided base Unit
-func Exa(b Unit, o ...UnitOption) Unit   { return mags["exa"].makeUnit(b, o...) }
-func Peta(b Unit, o ...UnitOption) Unit  { return mags["peta"].makeUnit(b, o...) }
-func Tera(b Unit, o ...UnitOption) Unit  { return mags["tera"].makeUnit(b, o...) }
-func Giga(b Unit, o ...UnitOption) Unit  { return mags["giga"].makeUnit(b, o...) }
-func Mega(b Unit, o ...UnitOption) Unit  { return mags["mega"].makeUnit(b, o...) }
-func Kilo(b Unit, o ...UnitOption) Unit  { return mags["kilo"].makeUnit(b, o...) }
-func Hecto(b Unit, o ...UnitOption) Unit { return mags["hecto"].makeUnit(b, o...) }
-func Deca(b Unit, o ...UnitOption) Unit  { return mags["deca"].makeUnit(b, o...) }
-func Deci(b Unit, o ...UnitOption) Unit  { return mags["deci"].makeUnit(b, o...) }
-func Centi(b Unit, o ...UnitOption) Unit { return mags["centi"].makeUnit(b, o...) }
-func Milli(b Unit, o ...UnitOption) Unit { return mags["milli"].makeUnit(b, o...) }
-func Micro(b Unit, o ...UnitOption) Unit { return mags["micro"].makeUnit(b, o...) }
-func Nano(b Unit, o ...UnitOption) Unit  { return mags["nano"].makeUnit(b, o...) }
-func Pico(b Unit, o ...UnitOption) Unit  { return mags["pico"].makeUnit(b, o...) }
-func Femto(b Unit, o ...UnitOption) Unit { return mags["femto"].makeUnit(b, o...) }
-func Atto(b Unit, o ...UnitOption) Unit  { return mags["atto"].makeUnit(b, o...) }
+
+type MagnitudeFactor = float64
+
+const (
+	FactorLinear MagnitudeFactor = iota + 1.0
+	FactorSquare
+	FactorCubic
+)
+
+func magnify(mag string, base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return mags[mag].makeUnit(base, factor, opts...)
+}
+
+func Exa(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyExa, base, factor, opts...)
+}
+
+func Peta(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyPeta, base, factor, opts...)
+}
+
+func Tera(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyTera, base, factor, opts...)
+}
+
+func Giga(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyGiga, base, factor, opts...)
+}
+
+func Mega(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyMega, base, factor, opts...)
+}
+
+func Kilo(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyKilo, base, factor, opts...)
+}
+
+func Hecto(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyHecto, base, factor, opts...)
+}
+
+func Deca(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyDeca, base, factor, opts...)
+}
+
+func Deci(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyDeci, base, factor, opts...)
+}
+
+func Centi(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyCenti, base, factor, opts...)
+}
+
+func Milli(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyMilli, base, factor, opts...)
+}
+
+func Micro(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyMicro, base, factor, opts...)
+}
+
+func Nano(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyNano, base, factor, opts...)
+}
+
+func Pico(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyPico, base, factor, opts...)
+}
+
+func Femto(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyFemto, base, factor, opts...)
+}
+
+func Atto(base Unit, factor MagnitudeFactor, opts ...UnitOption) Unit {
+	return magnify(keyAtto, base, factor, opts...)
+}
 
 // Create magnitude unit and conversion given a base unit
-func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
+func (mag magnitude) makeUnit(base Unit, factor MagnitudeFactor, addOpts ...UnitOption) Unit {
 	name := mag.Prefix + base.Name
 	symbol := mag.Symbol + base.Symbol
 
@@ -62,7 +141,7 @@ func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
 		opts = append(opts, UnitOptionAliases(magAlias))
 	}
 
-	// append any supplmental options
+	// append any supplemental options
 	for _, opt := range addOpts {
 		opts = append(opts, opt)
 	}
@@ -73,7 +152,7 @@ func (mag magnitude) makeUnit(base Unit, addOpts ...UnitOption) Unit {
 	u := NewUnit(name, symbol, opts...)
 
 	// only create conversions to and from base unit
-	ratio := 1.0 * math.Pow(10.0, mag.Power)
+	ratio := 1.0 * math.Pow(10.0, mag.Power*factor)
 	NewRatioConversion(u, base, ratio)
 
 	return u
